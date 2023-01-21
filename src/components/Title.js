@@ -1,13 +1,11 @@
-import React from "react";
+import "./Title.css";
 
-function Title({ title,subtitle }) {
+export default function Title({ title, subtitle }) {
   return (
-    <div>
-          <h1 className="title">{title}</h1>
+    <div className="title-block">
+      <h1 className="title">{title}</h1>
       <br />
-          <h2 className="subtitle">{subtitle}</h2>
+      <h2 className="subtitle">{subtitle}</h2>
     </div>
   );
 }
-
-export default Title;

@@ -1,21 +1,17 @@
-import React from 'react'
+import React from "react";
 
-function EventList({events, handleClick}) {
+export default function EventList({ events, handleClick }) {
   return (
-      <div>
-          
-          {
-            events.map((events, index) => (
-          <div key={events.id}>
-            <h2>
-              {index + 1}-{events.title}
-            </h2>
-            <button onClick={() => handleClick()}>Delete Event</button>
-          </div>
-        ))
-        }
+    <div>
+      {events.map((event, index) => (
+        <React.Fragment key={event.id}>
+          <h2>
+            {index} - {event.title}
+          </h2>
+          <p>{event.location} - {event.date}</p>
+          <button onClick={() => handleClick(event.id)}>delete event</button>
+        </React.Fragment>
+      ))}
     </div>
-  )
+  );
 }
-
-export default EventList

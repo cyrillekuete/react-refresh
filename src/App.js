@@ -1,35 +1,37 @@
-import { useState } from "react";
 import "./App.css";
-import EventList from "./components/EventList";
-import Modal from "./components/Modal";
+import React, { useState } from "react";
 import Title from "./components/Title";
+import Modal from "./components/Modal";
+import EventList from "./components/EventList";
+import NewEventForm from "./components/NewEventForm";
 
 function App() {
   const [showModal, setShowModal] = useState(false);
   const [showEvents, setShowEvents] = useState(true);
-  const [events, setEvents] = useState([
-    { title: "mario's birthday bash", id: 1 },
-    { title: "Browser's Live Stream", id: 2 },
-    { title: "Race on moo moo farm", id: 3 },
-  ]);
+  const [events, setEvents] = useState([]);
+  const addEvent = (event) => {
+    setEvents((prevEvents) => {
+      return [...prevEvents, event];
+    });
+    setShowModal(false);
+  };
 
   const handleClick = (id) => {
     setEvents((prevEvents) => {
-      return prevEvents.filter((event) => {
-        return id !== event.id;
-      });
+      return prevEvents.filter((event) => id !== event.id);
     });
   };
-  const handleClose = () => {
-    setShowModal(false);
-  };
-  // const handleShowModal = () => {
-  //   setShowModal(true);
+
+  // const handleClose = () => {
+  //   setShowModal(false);
   // };
+
+  const subtitle = "All the latest events in Mario land";
 
   return (
     <div className="App">
-      <Title title="Events in your Area" subtitle="This is a Subtitle" />
+      <Title title="Mario land Events" subtitle={subtitle} />
+
       {showEvents && (
         <div>
           <button onClick={() => setShowEvents(false)}>Hide Events</button>
@@ -41,13 +43,16 @@ function App() {
         </div>
       )}
       {showEvents && <EventList events={events} handleClick={handleClick} />}
-      <button onClick={() => setShowModal(true)}>Show Modal</button>
+
       {showModal && (
-        <Modal handleClose={handleClose}>
-          <h2>10% Off Coupon Code!!</h2>
-          <p>Use the code NINJA10 at the checkout</p>
+        <Modal isSalesModal={true}>
+          <NewEventForm addEvent={addEvent} />
         </Modal>
       )}
+
+      <div>
+        <button onClick={() => setShowModal(true)}>Add New Event</button>
+      </div>
     </div>
   );
 }
